@@ -113,6 +113,7 @@ function App() {
           modelId="2644f804dfcb434b8e7bde3e73ebc972"
           overlayOpacity={0.45}
           cardDelay={2200}
+          topMask={90}
         >
           <p>
             Born from the intersection of sound engineering and cloud architecture, 4WAVES delivers

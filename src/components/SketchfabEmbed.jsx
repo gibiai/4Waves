@@ -2,15 +2,14 @@ import { useRef, useState } from 'react';
 
 const bg = '#0D081A';
 
-/**
- * SketchfabEmbed
- * - Nasconde il loading screen con un overlay scuro che si dissolve
- *   solo dopo che iframe.onLoad + `revealDelay` ms sono passati.
- *   (onLoad = pagina Sketchfab pronta; il modello 3D renderizza ~2-3s dopo)
- * - Copre tutta la UI Sketchfab con maschere graduate.
- * - pointer-events bloccati → nessuna interazione mouse.
- */
-export default function SketchfabEmbed({ modelId, autospin = 0, revealDelay = 1700, className = '', style = {} }) {
+export default function SketchfabEmbed({
+  modelId,
+  autospin = 0,
+  revealDelay = 1700,
+  topMask = 68,       // altezza maschera top in px (aumenta per coprire autore)
+  className = '',
+  style = {},
+}) {
   const [revealed, setRevealed] = useState(false);
   const timerRef = useRef(null);
 
@@ -41,7 +40,7 @@ export default function SketchfabEmbed({ modelId, autospin = 0, revealDelay = 17
   return (
     <div className={`relative w-full h-full overflow-hidden ${className}`} style={style}>
 
-      {/* iframe — pointer-events none: mouse non raggiunge mai Sketchfab */}
+      {/* iframe — pointer-events none */}
       <iframe
         title="3D Model"
         frameBorder="0"
@@ -52,40 +51,41 @@ export default function SketchfabEmbed({ modelId, autospin = 0, revealDelay = 17
         onLoad={handleLoad}
       />
 
-      {/* ── Overlay di loading: copre tutto finché il modello non è pronto ── */}
+      {/* Loading overlay — scompare dopo revealDelay */}
       <div
         className="absolute inset-0 pointer-events-none transition-opacity duration-1000"
         style={{ background: bg, zIndex: 30, opacity: revealed ? 0 : 1 }}
       />
 
-      {/* ── Maschere permanenti sui bordi (coprono UI residua Sketchfab) ── */}
-
-      {/* TOP — autore, titolo, download, share */}
+      {/* TOP — copre autore/titolo (altezza configurabile via topMask) */}
       <div className="absolute top-0 left-0 right-0 pointer-events-none"
-        style={{ height: '68px', zIndex: 25, background: `linear-gradient(to bottom, ${bg} 60%, transparent)` }} />
+        style={{ height: `${topMask + 20}px`, zIndex: 25, background: `linear-gradient(to bottom, ${bg} 65%, transparent)` }} />
+      <div className="absolute top-0 left-0 right-0 pointer-events-none"
+        style={{ height: `${topMask}px`, zIndex: 26, background: bg }} />
 
-      {/* BOTTOM — striscia solida full-width: copre player, logo, controlli */}
+      {/* BOTTOM — striscia solida full-width */}
       <div className="absolute bottom-0 left-0 right-0 pointer-events-none"
-        style={{ height: '110px', zIndex: 25, background: `linear-gradient(to top, ${bg} 70%, transparent)` }} />
+        style={{ height: '120px', zIndex: 25, background: `linear-gradient(to top, ${bg} 70%, transparent)` }} />
       <div className="absolute bottom-0 left-0 right-0 pointer-events-none"
-        style={{ height: '68px', zIndex: 26, background: bg }} />
+        style={{ height: '70px', zIndex: 26, background: bg }} />
 
-      {/* Overlay principale: blocca mouse/touch verso Sketchfab, pan-y consente scroll pagina */}
-      <div className="absolute inset-0" style={{ zIndex: 31, pointerEvents: 'all', cursor: 'default', touchAction: 'pan-y' }} />
-
-      {/* Cover zona centro-basso: dove Sketchfab mostra l'icona mano su touch */}
+      {/* CENTRO — copre icona mano touch di Sketchfab (ampia, centrata verticalmente) */}
       <div
         className="absolute pointer-events-none"
         style={{
-          bottom: '68px',   /* sopra la striscia solida */
+          top: '50%',
           left: '50%',
-          transform: 'translateX(-50%)',
-          width: '160px',
-          height: '80px',
-          background: 'radial-gradient(ellipse, rgba(13,8,26,0.95) 40%, transparent 100%)',
+          transform: 'translate(-50%, -50%)',
+          width: '280px',
+          height: '200px',
+          background: 'radial-gradient(ellipse, rgba(13,8,26,0.92) 25%, transparent 75%)',
           zIndex: 27,
         }}
       />
+
+      {/* Overlay blocca-tutto — pan-y permette scroll pagina */}
+      <div className="absolute inset-0"
+        style={{ zIndex: 31, pointerEvents: 'all', cursor: 'default', touchAction: 'pan-y' }} />
     </div>
   );
 }

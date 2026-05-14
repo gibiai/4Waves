@@ -5,10 +5,11 @@ export default function Section({
   id,
   title,
   children,
-  modelId,          // Sketchfab model ID
+  modelId,
   autospin = 0,
   overlayOpacity = 0.5,
-  cardDelay = 2200, // ms dopo l'entrata in viewport → card appare
+  cardDelay = 2200,
+  topMask = 68,
 }) {
   const sectionRef = useRef(null);
   const [visible, setVisible] = useState(false);
@@ -25,7 +26,6 @@ export default function Section({
     return () => observer.disconnect();
   }, [visible]);
 
-  // Card appare dopo cardDelay ms dall'entrata in viewport
   useEffect(() => {
     if (!visible) return;
     const t = setTimeout(() => setCardReady(true), cardDelay);
@@ -36,23 +36,18 @@ export default function Section({
     <section
       id={id}
       ref={sectionRef}
-      className="relative w-full min-h-screen flex flex-col justify-center items-center px-8 md:px-24 py-24 overflow-hidden"
+      className="relative w-full min-h-screen flex flex-col justify-center items-center overflow-hidden
+                 px-4 md:px-24
+                 py-20 md:py-24"
     >
-      {/* Sfondo Sketchfab — scale+fade all'entrata */}
+      {/* 3D background */}
       {modelId && (
         <div className="absolute inset-0 w-full h-full">
           {visible && (
-            <div
-              className="w-full h-full transition-all duration-1000 ease-out"
-              style={{
-                opacity: visible ? 1 : 0,
-                transform: visible ? 'scale(1)' : 'scale(1.06)',
-              }}
-            >
-              <SketchfabEmbed modelId={modelId} autospin={autospin} />
+            <div className="w-full h-full transition-all duration-1000 ease-out">
+              <SketchfabEmbed modelId={modelId} autospin={autospin} topMask={topMask} />
             </div>
           )}
-          {/* Overlay scuro per leggibilità */}
           <div
             className="absolute inset-0 pointer-events-none"
             style={{ background: `rgba(13,8,26,${overlayOpacity})` }}
@@ -60,22 +55,22 @@ export default function Section({
         </div>
       )}
 
-      {/* Glass card — slide-up + fade dopo cardDelay */}
+      {/* Glass card */}
       <div
-        className="relative z-10 max-w-4xl w-full flex flex-col items-start glass-card glass-border rounded-3xl p-8 md:p-12 transition-all duration-700 ease-out"
+        className="relative z-10 w-full max-w-2xl md:max-w-4xl flex flex-col items-start
+                   glass-card glass-border rounded-2xl md:rounded-3xl
+                   p-6 md:p-12
+                   transition-all duration-700 ease-out"
         style={{
           opacity: cardReady ? 1 : 0,
           transform: cardReady ? 'translateY(0)' : 'translateY(36px)',
           pointerEvents: cardReady ? 'auto' : 'none',
         }}
       >
-        <h2
-          className="text-4xl md:text-5xl font-instrument font-bold text-white mb-8 uppercase tracking-widest"
-          data-text={title}
-        >
+        <h2 className="text-3xl md:text-5xl font-instrument font-bold text-white mb-6 md:mb-8 uppercase tracking-widest">
           {title}
         </h2>
-        <div className="text-white/80 font-inter text-lg leading-relaxed w-full">
+        <div className="text-white/80 font-inter text-base md:text-lg leading-relaxed w-full">
           {children}
         </div>
       </div>
