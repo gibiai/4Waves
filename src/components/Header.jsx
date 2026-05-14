@@ -21,7 +21,7 @@ export default function Header() {
         <img
           src="/logo.png"
           alt="4 WAVES"
-          className="h-10 md:h-12 w-auto object-contain"
+          className="h-20 md:h-24 w-auto object-contain"
           style={{ mixBlendMode: 'screen' }}
         />
       </button>
