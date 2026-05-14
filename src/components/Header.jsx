@@ -12,28 +12,18 @@ export default function Header() {
 
   return (
     <div className="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-6 md:px-16 pt-6 md:pt-8">
-      {/* Logo */}
+      {/* Logo immagine */}
       <button
         onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-        className="relative text-white font-bold text-xl tracking-wider font-instrument"
+        className="flex items-center"
+        aria-label="Torna all'inizio"
       >
         <img
-          src="/waves1-bg.png"
-          alt=""
-          aria-hidden="true"
-          className="absolute pointer-events-none"
-          style={{
-            mixBlendMode: 'screen',
-            opacity: 0.9,
-            width: '440px',
-            height: '130px',
-            top: '50%',
-            left: '50%',
-            transform: 'translate(-50%, -50%)',
-            objectFit: 'contain',
-          }}
+          src="/logo.png"
+          alt="4 WAVES"
+          className="h-10 md:h-12 w-auto object-contain"
+          style={{ mixBlendMode: 'screen' }}
         />
-        <span className="relative z-10">4WAVES</span>
       </button>
 
       {/* Nav — sempre visibile, si riduce su mobile */}

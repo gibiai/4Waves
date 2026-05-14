@@ -69,19 +69,6 @@ export default function SketchfabEmbed({
       <div className="absolute bottom-0 left-0 right-0 pointer-events-none"
         style={{ height: '70px', zIndex: 26, background: bg }} />
 
-      {/* CENTRO — copre icona mano touch di Sketchfab (ampia, centrata verticalmente) */}
-      <div
-        className="absolute pointer-events-none"
-        style={{
-          top: '50%',
-          left: '50%',
-          transform: 'translate(-50%, -50%)',
-          width: '280px',
-          height: '200px',
-          background: 'radial-gradient(ellipse, rgba(13,8,26,0.92) 25%, transparent 75%)',
-          zIndex: 27,
-        }}
-      />
 
       {/* Overlay blocca-tutto — pan-y permette scroll pagina */}
       <div className="absolute inset-0"

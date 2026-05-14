@@ -80,7 +80,7 @@ function App() {
       <Background />
       <Header />
 
-      <div className="relative z-10">
+      <div className="relative z-10 flex flex-col gap-16 md:gap-24">
         <Hero />
 
         <Section
