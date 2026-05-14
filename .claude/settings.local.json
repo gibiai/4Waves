@@ -14,7 +14,9 @@
       "Bash(git push *)",
       "WebFetch(domain:sketchfab.com)",
       "WebFetch(domain:api.sketchfab.com)",
-      "WebFetch(domain:media.sketchfab.com)"
+      "WebFetch(domain:media.sketchfab.com)",
+      "Bash(rm /Users/gibiai/Desktop/smart-tech-website/public/*.glb && ls /Users/gibiai/Desktop/smart-tech-website/public/)",
+      "Bash(npm uninstall *)"
     ]
   }
 }

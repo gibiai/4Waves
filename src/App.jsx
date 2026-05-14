@@ -83,20 +83,12 @@ function App() {
       <div className="relative z-10">
         <Hero />
 
-        {/* Projects — camera bassa rasente la superficie, zoom da lontano */}
         <Section
           id="projects"
           title="Projects"
-          modelPath="/abstract_red_background.glb"
-          modelScale={3}
-          modelPosition={[0, -0.5, 0]}
-          cameraPosition={[0, 0.4, 3.5]}
-          cameraTarget={[0, -0.8, 0]}
-          startZ={22}
-          cameraSpeed={0.3}
-          ambientIntensity={1.2}
-          environmentPreset="night"
-          overlayOpacity={0.35}
+          modelId="c8e13126e1d04d3e83de457233fdcf2a"
+          overlayOpacity={0.38}
+          cardDelay={2000}
         >
           <p className="mb-4 text-white/70">Here&apos;s all our projects launched:</p>
           <ul className="space-y-3 text-white/80">
@@ -115,20 +107,12 @@ function App() {
           </ul>
         </Section>
 
-        {/* About — camera lontana, si vede quasi tutto il modello */}
         <Section
           id="about"
           title="About 4Waves"
-          modelPath="/shades_of_light.glb"
-          modelScale={1.5}
-          modelPosition={[0, 0, 0]}
-          cameraPosition={[0, 0.5, 11]}
-          cameraTarget={[0, 0, 0]}
-          startZ={28}
-          cameraSpeed={0.28}
-          ambientIntensity={2}
-          environmentPreset="night"
+          modelId="2644f804dfcb434b8e7bde3e73ebc972"
           overlayOpacity={0.45}
+          cardDelay={2200}
         >
           <p>
             Born from the intersection of sound engineering and cloud architecture, 4WAVES delivers
@@ -137,21 +121,12 @@ function App() {
           </p>
         </Section>
 
-        {/* Contact — paradox: camera leggermente alta, diagonale */}
         <Section
           id="contact"
           title="Contact Us"
-          modelPath="/paradox_abstract_art_of_python.glb"
-          modelScale={1.5}
-          modelPosition={[0, 0, 0]}
-          modelRotation={[0, Math.PI / 4, 0]}
-          cameraPosition={[2, 1.8, 6]}
-          cameraTarget={[0, 0, 0]}
-          startZ={20}
-          cameraSpeed={0.32}
-          ambientIntensity={1.5}
-          environmentPreset="night"
-          overlayOpacity={0.45}
+          modelId="a9f0368eb94c475baae30579b704eed8"
+          overlayOpacity={0.42}
+          cardDelay={2000}
         >
           <p className="mb-6 text-white/70">
             Ready to synchronize your infrastructure? Reach out to our frequency engineers.
