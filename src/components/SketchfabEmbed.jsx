@@ -10,7 +10,7 @@ const bg = '#0D081A';
  * - Copre tutta la UI Sketchfab con maschere graduate.
  * - pointer-events bloccati → nessuna interazione mouse.
  */
-export default function SketchfabEmbed({ modelId, autospin = 0, revealDelay = 1900, className = '', style = {} }) {
+export default function SketchfabEmbed({ modelId, autospin = 0, revealDelay = 1700, className = '', style = {} }) {
   const [revealed, setRevealed] = useState(false);
   const timerRef = useRef(null);
 
@@ -64,20 +64,14 @@ export default function SketchfabEmbed({ modelId, autospin = 0, revealDelay = 19
       <div className="absolute top-0 left-0 right-0 pointer-events-none"
         style={{ height: '68px', zIndex: 25, background: `linear-gradient(to bottom, ${bg} 60%, transparent)` }} />
 
-      {/* BOTTOM — player, progress bar con pallino, timer, controlli */}
+      {/* BOTTOM — striscia solida full-width: copre player, logo, controlli */}
       <div className="absolute bottom-0 left-0 right-0 pointer-events-none"
-        style={{ height: '110px', zIndex: 25, background: `linear-gradient(to top, ${bg} 65%, transparent)` }} />
+        style={{ height: '110px', zIndex: 25, background: `linear-gradient(to top, ${bg} 70%, transparent)` }} />
+      <div className="absolute bottom-0 left-0 right-0 pointer-events-none"
+        style={{ height: '68px', zIndex: 26, background: bg }} />
 
-      {/* BOTTOM-LEFT solido — logo Sketchfab */}
-      <div className="absolute bottom-0 left-0 pointer-events-none"
-        style={{ width: '90px', height: '110px', zIndex: 26, background: bg }} />
-
-      {/* BOTTOM-RIGHT solido — bottoni settings/VR/fullscreen */}
-      <div className="absolute bottom-0 right-0 pointer-events-none"
-        style={{ width: '220px', height: '110px', zIndex: 26, background: `linear-gradient(to left, ${bg} 55%, transparent)` }} />
-
-      {/* Overlay cattura-mouse: blocca ogni interazione */}
-      <div className="absolute inset-0" style={{ zIndex: 31, pointerEvents: 'all', cursor: 'default' }} />
+      {/* Overlay cattura-mouse e touch: blocca ogni interazione inclusa icona "touch & drag" */}
+      <div className="absolute inset-0" style={{ zIndex: 31, pointerEvents: 'all', cursor: 'default', touchAction: 'none' }} />
     </div>
   );
 }

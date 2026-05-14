@@ -22,9 +22,9 @@ export default function Hero() {
       id="hero"
       className="relative w-full min-h-screen flex items-center overflow-hidden"
     >
-      {/* Modello 3D destra — scala + fade in */}
+      {/* Modello 3D — full bg su mobile, metà destra su desktop */}
       <div
-        className="absolute right-0 top-0 w-full md:w-[62%] h-full transition-all duration-1000 ease-out"
+        className="absolute inset-0 md:left-auto md:right-0 md:w-[62%] transition-all duration-1000 ease-out"
         style={{
           opacity: iframeReady ? 1 : 0,
           transform: iframeReady ? 'scale(1)' : 'scale(1.08)',
@@ -33,8 +33,10 @@ export default function Hero() {
         <SketchfabEmbed modelId={LOADING_ID} autospin={0.2} revealDelay={3200} />
       </div>
 
-      {/* Gradient sinistra per leggibilità testo */}
-      <div className="absolute inset-0 bg-gradient-to-r from-[#0D081A] via-[#0D081A]/80 via-40% to-transparent pointer-events-none z-10" />
+      {/* Gradient: su mobile copre tutto da sinistra, su desktop solo metà */}
+      <div className="absolute inset-0 pointer-events-none z-10
+        bg-gradient-to-r from-[#0D081A] via-[#0D081A]/90
+        md:from-[#0D081A] md:via-[#0D081A]/80 md:via-40% md:to-transparent" />
 
       {/* Testo hero */}
       <div
