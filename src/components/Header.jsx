@@ -30,8 +30,8 @@ export default function Header() {
           style={{
             mixBlendMode: 'screen',
             opacity: 0.9,
-            width: '320px',
-            height: '100px',
+            width: '440px',
+            height: '130px',
             top: '50%',
             left: '50%',
             transform: 'translate(-50%, -50%)',
