@@ -21,7 +21,7 @@ export default function Header() {
         <img
           src="/logo.png"
           alt="4 WAVES"
-          className="h-20 md:h-24 w-auto object-contain"
+          className="h-[107px] md:h-32 w-auto object-contain rounded-xl border border-white/20 px-3 py-1 transition-all duration-300 hover:border-white/50 hover:shadow-[0_0_12px_rgba(94,210,156,0.3)]"
           style={{ mixBlendMode: 'screen' }}
         />
       </button>
