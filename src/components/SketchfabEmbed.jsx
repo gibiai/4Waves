@@ -10,7 +10,7 @@ const bg = '#0D081A';
  * - Copre tutta la UI Sketchfab con maschere graduate.
  * - pointer-events bloccati → nessuna interazione mouse.
  */
-export default function SketchfabEmbed({ modelId, autospin = 0, revealDelay = 2800, className = '', style = {} }) {
+export default function SketchfabEmbed({ modelId, autospin = 0, revealDelay = 1900, className = '', style = {} }) {
   const [revealed, setRevealed] = useState(false);
   const timerRef = useRef(null);
 
