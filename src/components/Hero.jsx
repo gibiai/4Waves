@@ -46,7 +46,7 @@ export default function Hero() {
           rotateSpeed={0.004}
           cameraPosition={[0, 0, 6]}
           ambientIntensity={2}
-          environmentPreset="city"
+          environmentPreset="night"
           style={{ width: '100%', height: '100%' }}
         />
       </div>

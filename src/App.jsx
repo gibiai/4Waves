@@ -88,9 +88,9 @@ function App() {
           id="projects"
           title="Projects"
           modelPath="/abstract_red_background.glb"
-          modelScale={1.5}
-          modelPosition={[0, 0, 0]}
-          cameraPosition={[0, 0, 6]}
+          modelScale={2}
+          modelPosition={[0, -1, 0]}
+          cameraPosition={[0, 3, 5]}
         >
           <p className="mb-4 text-white/70">Here&apos;s all our projects launched:</p>
           <ul className="space-y-3 text-white/80">
@@ -114,9 +114,9 @@ function App() {
           id="about"
           title="About 4Waves"
           modelPath="/shades_of_light.glb"
-          modelScale={1.5}
+          modelScale={1.8}
           modelPosition={[0, 0, 0]}
-          cameraPosition={[0, 0, 6]}
+          cameraPosition={[0, 0, 5]}
         >
           <p>
             Born from the intersection of sound engineering and cloud architecture, 4WAVES delivers
@@ -129,10 +129,10 @@ function App() {
         <Section
           id="contact"
           title="Contact Us"
-          modelPath="/paradox_abstract_art_of_python.glb"
+          modelPath="/inner_sanctum.glb"
           modelScale={1.5}
           modelPosition={[0, 0, 0]}
-          cameraPosition={[0, 0, 6]}
+          cameraPosition={[0, 0, 7]}
         >
           <p className="mb-6 text-white/70">
             Ready to synchronize your infrastructure? Reach out to our frequency engineers.

@@ -2,7 +2,7 @@ import { Suspense, useRef } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
 import { useGLTF, OrbitControls, Environment } from '@react-three/drei';
 
-function GLBModel({ path, scale = 1, position = [0, 0, 0], rotation = [0, 0, 0], autoRotate = false, rotateSpeed = 0.003 }) {
+function GLBModel({ path, scale, position, rotation, autoRotate, rotateSpeed }) {
   const { scene } = useGLTF(path);
   const ref = useRef();
 
@@ -25,7 +25,6 @@ export default function Model3D({
   className = '',
   style = {},
   cameraPosition = [0, 0, 5],
-  enableOrbit = false,
   ambientIntensity = 1.5,
   environmentPreset = 'city',
 }) {
@@ -50,7 +49,15 @@ export default function Model3D({
         />
         <Environment preset={environmentPreset} />
       </Suspense>
-      {enableOrbit && <OrbitControls enableZoom={false} />}
+      {/* Interazione mouse: drag per ruotare, no scroll zoom per non interferire con la pagina */}
+      <OrbitControls
+        enableZoom={false}
+        enablePan={false}
+        autoRotate={autoRotate}
+        autoRotateSpeed={rotateSpeed * 200}
+        dampingFactor={0.05}
+        enableDamping
+      />
     </Canvas>
   );
 }
