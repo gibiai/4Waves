@@ -70,8 +70,22 @@ export default function SketchfabEmbed({ modelId, autospin = 0, revealDelay = 17
       <div className="absolute bottom-0 left-0 right-0 pointer-events-none"
         style={{ height: '68px', zIndex: 26, background: bg }} />
 
-      {/* Overlay: blocca touch verso Sketchfab (no icona mano) ma pan-y consente scroll pagina */}
+      {/* Overlay principale: blocca mouse/touch verso Sketchfab, pan-y consente scroll pagina */}
       <div className="absolute inset-0" style={{ zIndex: 31, pointerEvents: 'all', cursor: 'default', touchAction: 'pan-y' }} />
+
+      {/* Cover zona centro-basso: dove Sketchfab mostra l'icona mano su touch */}
+      <div
+        className="absolute pointer-events-none"
+        style={{
+          bottom: '68px',   /* sopra la striscia solida */
+          left: '50%',
+          transform: 'translateX(-50%)',
+          width: '160px',
+          height: '80px',
+          background: 'radial-gradient(ellipse, rgba(13,8,26,0.95) 40%, transparent 100%)',
+          zIndex: 27,
+        }}
+      />
     </div>
   );
 }
