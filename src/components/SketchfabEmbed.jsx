@@ -1,10 +1,23 @@
+import { useRef, useState } from 'react';
+
+const bg = '#0D081A';
+
 /**
- * SketchfabEmbed — iframe decorativo puro.
- * La UI di Sketchfab (autore, barra animazione, logo, controlli) viene
- * coperta fisicamente da div gradient posizionati sopra l'iframe,
- * poiché l'iframe è cross-origin e i parametri ui_*=0 non bastano.
+ * SketchfabEmbed
+ * - Nasconde il loading screen con un overlay scuro che si dissolve
+ *   solo dopo che iframe.onLoad + `revealDelay` ms sono passati.
+ *   (onLoad = pagina Sketchfab pronta; il modello 3D renderizza ~2-3s dopo)
+ * - Copre tutta la UI Sketchfab con maschere graduate.
+ * - pointer-events bloccati → nessuna interazione mouse.
  */
-export default function SketchfabEmbed({ modelId, autospin = 0, className = '', style = {} }) {
+export default function SketchfabEmbed({ modelId, autospin = 0, revealDelay = 2800, className = '', style = {} }) {
+  const [revealed, setRevealed] = useState(false);
+  const timerRef = useRef(null);
+
+  const handleLoad = () => {
+    timerRef.current = setTimeout(() => setRevealed(true), revealDelay);
+  };
+
   const params = new URLSearchParams({
     autostart:      '1',
     preload:        '1',
@@ -25,12 +38,10 @@ export default function SketchfabEmbed({ modelId, autospin = 0, className = '', 
     ui_color:       '000000',
   });
 
-  const bg = '#0D081A';
-
   return (
     <div className={`relative w-full h-full overflow-hidden ${className}`} style={style}>
 
-      {/* iframe: pointer-events none → mouse non raggiunge mai Sketchfab */}
+      {/* iframe — pointer-events none: mouse non raggiunge mai Sketchfab */}
       <iframe
         title="3D Model"
         frameBorder="0"
@@ -38,25 +49,35 @@ export default function SketchfabEmbed({ modelId, autospin = 0, className = '', 
         src={`https://sketchfab.com/models/${modelId}/embed?${params}`}
         className="absolute inset-0 w-full h-full"
         style={{ border: 'none', pointerEvents: 'none' }}
+        onLoad={handleLoad}
       />
 
-      {/* ── Maschere che coprono la UI di Sketchfab ──────────────── */}
+      {/* ── Overlay di loading: copre tutto finché il modello non è pronto ── */}
+      <div
+        className="absolute inset-0 pointer-events-none transition-opacity duration-1000"
+        style={{ background: bg, zIndex: 30, opacity: revealed ? 0 : 1 }}
+      />
 
-      {/* TOP — copre "Nome modello / by autore" + icone download/share */}
-      <div className="absolute top-0 left-0 right-0 pointer-events-none" style={{ height: '64px', zIndex: 20, background: `linear-gradient(to bottom, ${bg} 55%, transparent)` }} />
+      {/* ── Maschere permanenti sui bordi (coprono UI residua Sketchfab) ── */}
 
-      {/* BOTTOM — copre barra animazione, timer, cerchio blu, controlli */}
-      <div className="absolute bottom-0 left-0 right-0 pointer-events-none" style={{ height: '80px', zIndex: 20, background: `linear-gradient(to top, ${bg} 60%, transparent)` }} />
+      {/* TOP — autore, titolo, download, share */}
+      <div className="absolute top-0 left-0 right-0 pointer-events-none"
+        style={{ height: '68px', zIndex: 25, background: `linear-gradient(to bottom, ${bg} 60%, transparent)` }} />
 
-      {/* BOTTOM-LEFT solido — copre il logo Sketchfab (cerchio blu+cubo) */}
-      <div className="absolute bottom-0 left-0 pointer-events-none" style={{ width: '80px', height: '80px', zIndex: 21, background: bg }} />
+      {/* BOTTOM — player, progress bar con pallino, timer, controlli */}
+      <div className="absolute bottom-0 left-0 right-0 pointer-events-none"
+        style={{ height: '110px', zIndex: 25, background: `linear-gradient(to top, ${bg} 65%, transparent)` }} />
 
-      {/* BOTTOM-RIGHT solido — copre i bottoni ?, settings, VR, fullscreen */}
-      <div className="absolute bottom-0 right-0 pointer-events-none" style={{ width: '200px', height: '80px', zIndex: 21, background: `linear-gradient(to left, ${bg} 50%, transparent)` }} />
+      {/* BOTTOM-LEFT solido — logo Sketchfab */}
+      <div className="absolute bottom-0 left-0 pointer-events-none"
+        style={{ width: '90px', height: '110px', zIndex: 26, background: bg }} />
 
-      {/* Overlay trasparente: blocca tutti gli eventi mouse sull'intera area */}
-      <div className="absolute inset-0" style={{ zIndex: 22, pointerEvents: 'all', cursor: 'default' }} />
+      {/* BOTTOM-RIGHT solido — bottoni settings/VR/fullscreen */}
+      <div className="absolute bottom-0 right-0 pointer-events-none"
+        style={{ width: '220px', height: '110px', zIndex: 26, background: `linear-gradient(to left, ${bg} 55%, transparent)` }} />
 
+      {/* Overlay cattura-mouse: blocca ogni interazione */}
+      <div className="absolute inset-0" style={{ zIndex: 31, pointerEvents: 'all', cursor: 'default' }} />
     </div>
   );
 }

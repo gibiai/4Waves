@@ -10,8 +10,10 @@ export default function Hero() {
 
   // Testo appare dopo che l'iframe ha avuto il tempo di caricare
   useEffect(() => {
-    const t1 = setTimeout(() => setIframeReady(true), 300);
-    const t2 = setTimeout(() => setTextReady(true), 1600);
+    // Il modello impiega ~onLoad + 2.8s per essere pronto (vedi revealDelay in SketchfabEmbed)
+    // Il testo appare un attimo prima del modello per un effetto di entrata coordinato
+    const t1 = setTimeout(() => setIframeReady(true), 200);
+    const t2 = setTimeout(() => setTextReady(true), 1200);
     return () => { clearTimeout(t1); clearTimeout(t2); };
   }, []);
 
@@ -28,7 +30,7 @@ export default function Hero() {
           transform: iframeReady ? 'scale(1)' : 'scale(1.08)',
         }}
       >
-        <SketchfabEmbed modelId={LOADING_ID} autospin={0.2} />
+        <SketchfabEmbed modelId={LOADING_ID} autospin={0.2} revealDelay={3200} />
       </div>
 
       {/* Gradient sinistra per leggibilità testo */}
