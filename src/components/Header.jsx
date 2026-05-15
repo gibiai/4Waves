@@ -26,8 +26,8 @@ export default function Header() {
         />
       </button>
 
-      {/* Nav — sempre visibile, si riduce su mobile */}
-      <nav className="flex gap-5 md:gap-10 items-center font-instrument">
+      {/* Nav — tutti i link in un unico bottone bordato */}
+      <nav className="flex items-center gap-5 md:gap-8 px-5 md:px-8 py-3 rounded-2xl border border-white/20 transition-all duration-300 hover:border-white/50 hover:shadow-[0_0_12px_rgba(94,210,156,0.3)] font-instrument">
         {links.map((link) => (
           <button
             key={link.id}
