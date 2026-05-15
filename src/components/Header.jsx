@@ -11,23 +11,23 @@ export default function Header() {
   };
 
   return (
-    <div className="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-6 md:px-16 pt-6 md:pt-8">
+    <div className="fixed top-0 left-0 w-full z-50 flex justify-between items-center gap-3 px-4 md:px-16 pt-4 md:pt-8">
       {/* Logo immagine */}
       <button
         onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-        className="flex items-center"
+        className="flex items-center shrink-0"
         aria-label="Torna all'inizio"
       >
         <img
           src="/logo.png"
           alt="4 WAVES"
-          className="h-[107px] md:h-32 w-auto object-contain rounded-2xl border border-white/20 transition-all duration-300 hover:border-white/50 hover:shadow-[0_0_12px_rgba(94,210,156,0.3)]"
+          className="h-16 md:h-24 w-auto object-contain rounded-2xl border border-white/20 transition-all duration-300 hover:border-white/50 hover:shadow-[0_0_12px_rgba(94,210,156,0.3)]"
           style={{ mixBlendMode: 'screen' }}
         />
       </button>
 
       {/* Nav — tutti i link in un unico bottone bordato */}
-      <nav className="flex items-center gap-5 md:gap-8 px-5 md:px-8 py-3 rounded-2xl border border-white/20 transition-all duration-300 hover:border-white/50 hover:shadow-[0_0_12px_rgba(94,210,156,0.3)] font-instrument">
+      <nav className="flex items-center gap-3 md:gap-8 px-4 md:px-8 py-2.5 md:py-3 rounded-2xl border border-white/20 transition-all duration-300 hover:border-white/50 hover:shadow-[0_0_12px_rgba(94,210,156,0.3)] font-instrument shrink-0">
         {links.map((link) => (
           <button
             key={link.id}
