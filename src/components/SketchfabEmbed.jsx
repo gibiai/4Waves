@@ -40,14 +40,19 @@ export default function SketchfabEmbed({
   return (
     <div className={`relative w-full h-full overflow-hidden ${className}`} style={style}>
 
-      {/* iframe — pointer-events none */}
+      {/* iframe — pointer-events none + cursore forzato a default */}
       <iframe
         title="3D Model"
         frameBorder="0"
         allow="autoplay; fullscreen; xr-spatial-tracking"
         src={`https://sketchfab.com/models/${modelId}/embed?${params}`}
         className="absolute inset-0 w-full h-full"
-        style={{ border: 'none', pointerEvents: 'none' }}
+        style={{
+          border: 'none',
+          pointerEvents: 'none',
+          touchAction: 'none',
+          cursor: 'default',
+        }}
         onLoad={handleLoad}
       />
 
@@ -71,8 +76,18 @@ export default function SketchfabEmbed({
 
 
       {/* Overlay blocca-tutto — pan-y permette scroll pagina */}
-      <div className="absolute inset-0"
-        style={{ zIndex: 31, pointerEvents: 'all', cursor: 'default', touchAction: 'pan-y' }} />
+      <div
+        className="absolute inset-0"
+        style={{
+          zIndex: 31,
+          pointerEvents: 'all',
+          cursor: 'default',
+          touchAction: 'pan-y',
+          WebkitTouchCallout: 'none',
+          WebkitUserSelect: 'none',
+          userSelect: 'none',
+        }}
+      />
     </div>
   );
 }

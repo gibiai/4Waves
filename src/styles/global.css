@@ -19,6 +19,12 @@
   }
 }
 
+/* Force default cursor on all Sketchfab iframes — prevents grab/hand cursor */
+iframe[title="3D Model"] {
+  pointer-events: none !important;
+  cursor: default !important;
+}
+
 @layer utilities {
   .animated-gradient-text {
     background: linear-gradient(90deg, #FFFFFF, #FF6B35, #B14EFF, #5ED29C, #FFFFFF);
