@@ -77,17 +77,23 @@ export default function SketchfabEmbed({
         style={{ height: '70px', zIndex: 26, background: bg }} />
 
 
-      {/* Overlay blocca-tutto — pan-y permette scroll pagina */}
-      <div
-        className="absolute inset-0"
+      {/* Canvas overlay — blocca definitivamente il cursore grab dell'iframe */}
+      <canvas
+        ref={(el) => {
+          if (el) {
+            el.width = el.offsetWidth * 2;
+            el.height = el.offsetHeight * 2;
+            const ctx = el.getContext('2d');
+            if (ctx) ctx.clearRect(0, 0, el.width, el.height);
+          }
+        }}
+        className="absolute inset-0 w-full h-full"
         style={{
-          zIndex: 31,
-          pointerEvents: 'all',
+          zIndex: 32,
+          pointerEvents: 'auto',
           cursor: 'default',
           touchAction: 'pan-y',
-          WebkitTouchCallout: 'none',
-          WebkitUserSelect: 'none',
-          userSelect: 'none',
+          background: 'transparent',
         }}
       />
     </div>
