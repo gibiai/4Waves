@@ -38,9 +38,9 @@ export default function SketchfabEmbed({
   });
 
   return (
-    <div className={`relative w-full h-full overflow-hidden ${className}`} style={style}>
+    <div className={`relative w-full h-full overflow-hidden ${className}`} style={{...style, isolation: 'isolate'}}>
 
-      {/* iframe — pointer-events none + cursore forzato a default */}
+      {/* iframe — pointer-events none + cursore forzato a default + contenimento */}
       <iframe
         title="3D Model"
         frameBorder="0"
@@ -52,6 +52,8 @@ export default function SketchfabEmbed({
           pointerEvents: 'none',
           touchAction: 'none',
           cursor: 'default',
+          contain: 'strict',
+          transform: 'translateZ(0)',
         }}
         onLoad={handleLoad}
       />
