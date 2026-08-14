@@ -6,7 +6,7 @@
   --font-inter: 'Outfit', sans-serif;
   --font-instrument: 'Outfit', sans-serif;
   
-  --color-primary: #1A0B2E; /* Deep Purple */
+  --color-primary: #070312; /* Deep Space */
   --color-accent: #FF6B35; /* Vibrant Orange */
   --color-accent-hover: #FF8B5E;
   --color-glow: #5ED29C; /* Mint Green Glow */
@@ -15,7 +15,7 @@
 
 @layer base {
   body {
-    @apply bg-primary text-slate-100 font-inter antialiased m-0 p-0 overflow-x-hidden scroll-smooth;
+    @apply bg-primary text-slate-100 font-inter antialiased m-0 p-0 overflow-x-clip;
   }
 }
 
@@ -26,6 +26,104 @@ iframe[title="3D Model"] {
 }
 
 @layer utilities {
+  /* Big hollow display text */
+  .outline-text {
+    color: transparent;
+    -webkit-text-stroke: 2px rgba(255, 255, 255, 0.75);
+    text-shadow: 0 0 30px rgba(94, 210, 156, 0.15);
+  }
+  @media (max-width: 767px) {
+    .outline-text { -webkit-text-stroke-width: 1.2px; }
+  }
+
+  .glow-mint {
+    text-shadow: 0 0 18px rgba(94, 210, 156, 0.55), 0 0 60px rgba(94, 210, 156, 0.25);
+  }
+
+  /* Fragmented lettering: each glyph drops out on its own clock */
+  .frag-letter {
+    animation: frag 3.1s linear infinite;
+  }
+  @keyframes frag {
+    0%, 100% { opacity: 1; transform: none; }
+    6% { opacity: 0.2; transform: translateY(-2px); }
+    8% { opacity: 1; transform: none; }
+    37% { opacity: 1; }
+    39% { opacity: 0.35; transform: translateY(1px) skewX(10deg); }
+    41% { opacity: 1; transform: none; }
+    72% { opacity: 1; }
+    73% { opacity: 0.5; }
+    74% { opacity: 1; }
+  }
+
+  /* Neon sign flicker for small labels */
+  .flicker {
+    animation: flicker 4s linear infinite;
+  }
+  @keyframes flicker {
+    0%, 100% { opacity: 1; }
+    3% { opacity: 0.4; }
+    6% { opacity: 1; }
+    7% { opacity: 0.6; }
+    8% { opacity: 1; }
+    52% { opacity: 1; }
+    53% { opacity: 0.5; }
+    54% { opacity: 1; }
+  }
+
+  /* Vertical side ticker */
+  .marquee-v-mask {
+    mask-image: linear-gradient(180deg, transparent, black 15%, black 85%, transparent);
+    -webkit-mask-image: linear-gradient(180deg, transparent, black 15%, black 85%, transparent);
+  }
+  .marquee-v-track {
+    height: max-content;
+    animation: marquee-v 40s linear infinite;
+  }
+  .marquee-v-track-rev {
+    animation-direction: reverse;
+  }
+  @keyframes marquee-v {
+    from { transform: translateY(0); }
+    to { transform: translateY(-50%); }
+  }
+
+  /* 3D extruded wordmark */
+  .logo-3d {
+    color: #eafff5;
+    transform-style: preserve-3d;
+    will-change: transform;
+    text-shadow:
+      0 0 14px rgba(94, 210, 156, 0.35),
+      1px 1px 0 #5ed29c,
+      2px 2px 0 #48b585,
+      3px 3px 0 #9d4edd,
+      4px 4px 0 #7d3cb8,
+      5px 5px 0 #52267c,
+      6px 6px 14px rgba(0, 0, 0, 0.65);
+  }
+
+  /* Scroll hint pulse */
+  .scroll-hint {
+    animation: scroll-hint 2.4s ease-in-out infinite;
+  }
+  @keyframes scroll-hint {
+    0%, 100% { opacity: 0.3; transform: translateY(0); }
+    50% { opacity: 0.9; transform: translateY(6px); }
+  }
+
+  /* Reveal-on-scroll (paired with useReveal hook) */
+  .reveal {
+    opacity: 0;
+    transform: translateY(48px);
+    transition: opacity 0.9s cubic-bezier(0.22, 1, 0.36, 1),
+      transform 0.9s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .reveal.in-view {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
   .animated-gradient-text {
     background: linear-gradient(90deg, #FFFFFF, #FF6B35, #B14EFF, #5ED29C, #FFFFFF);
     background-size: 200% auto;
@@ -83,7 +181,7 @@ iframe[title="3D Model"] {
     opacity: 0.8;
   }
   .is-scrolling .glitch-text::before {
-    color: #0ea5e9;
+    color: #5ED29C;
     z-index: -1;
     animation: glitch-anim-1 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) both infinite alternate;
   }

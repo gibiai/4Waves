@@ -1,78 +1,90 @@
-import { useState, useEffect } from 'react';
-import SketchfabEmbed from './SketchfabEmbed';
-
-const LOADING_ID = '22593732efaa4bc194cb0d9d059bf439';
+import { useEffect, useState } from 'react';
 
 export default function Hero() {
-  const [textReady, setTextReady] = useState(false);
-  const [iframeReady, setIframeReady] = useState(false);
+  const [ready, setReady] = useState(false);
 
   useEffect(() => {
-    const t1 = setTimeout(() => setIframeReady(true), 200);
-    const t2 = setTimeout(() => setTextReady(true), 1200);
-    return () => { clearTimeout(t1); clearTimeout(t2); };
+    const t = setTimeout(() => setReady(true), 300);
+    return () => clearTimeout(t);
   }, []);
 
+  const scrollTo = (id) => {
+    window.__fourwavesBurst?.(0.9);
+    if (window.__lenis) {
+      window.__lenis.scrollTo(`#${id}`);
+    } else {
+      document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
   return (
-    <section
-      id="hero"
-      className="relative w-full min-h-screen flex items-center overflow-hidden"
-    >
-      {/* Modello 3D — full bg su mobile, metà destra su desktop */}
+    <section id="hero" className="relative w-full min-h-screen flex flex-col justify-center overflow-hidden">
+      {/* scrim for text readability over the bright scene */}
+      <div className="absolute inset-0 pointer-events-none bg-gradient-to-r from-primary/80 via-primary/35 to-transparent" />
+
       <div
-        className="absolute inset-0 md:left-auto md:right-0 md:w-[62%] transition-all duration-1000 ease-out"
+        className="relative px-6 md:px-24 pt-28 md:pt-20 transition-all duration-1000 ease-out"
         style={{
-          opacity: iframeReady ? 1 : 0,
-          transform: iframeReady ? 'scale(1)' : 'scale(1.08)',
+          opacity: ready ? 1 : 0,
+          transform: ready ? 'translateY(0)' : 'translateY(40px)',
         }}
       >
-        <SketchfabEmbed modelId={LOADING_ID} autospin={0.2} revealDelay={3200} />
-      </div>
-
-      {/* Gradient leggibilità */}
-      <div className="absolute inset-0 pointer-events-none z-10
-        bg-gradient-to-r from-[#0D081A] via-[#0D081A]/90
-        md:from-[#0D081A] md:via-[#0D081A]/80 md:via-40% md:to-transparent" />
-
-      {/* Testo hero
-          pt-28 = spazio per header fisso su mobile portrait
-          landscape: testo più piccolo, niente padding verticale extra */}
-      <div
-        className="relative z-20 flex flex-col items-start text-left
-                   px-8 md:px-24 w-full md:w-1/2
-                   pt-28 md:pt-0
-                   transition-all duration-700 ease-out"
-        style={{
-          opacity: textReady ? 1 : 0,
-          transform: textReady ? 'translateY(0)' : 'translateY(28px)',
-        }}
-      >
-        <p className="font-inter font-semibold text-xs md:text-base uppercase tracking-[0.2em] mb-2 md:mb-4 text-accent">
-          Four Frequencies
+        <p className="font-inter font-semibold text-[10px] md:text-xs uppercase tracking-[0.45em] mb-4 md:mb-6 text-glow" aria-label="Signal online">
+          {'SIGNAL ONLINE'.split('').map((ch, i) =>
+            ch === ' ' ? (
+              <span key={i} className="inline-block w-3" />
+            ) : (
+              <span
+                key={i}
+                className="frag-letter inline-block"
+                style={{ animationDelay: `${((i * 0.53) % 2.9).toFixed(2)}s` }}
+              >
+                {ch}
+              </span>
+            )
+          )}
         </p>
 
-        <h1
-          className="text-4xl landscape:text-3xl md:text-7xl lg:text-8xl
-                     leading-[1.1] tracking-tight font-inter font-bold
-                     mb-3 md:mb-6 uppercase glitch-text animated-gradient-text glass-text-stroke"
-          data-text="ZERO DOWNTIME"
-        >
-          Zero <br />
-          Downtime
+        <h1 className="font-inter font-extrabold uppercase leading-[0.9] select-none">
+          <span
+            className="block text-[15vw] md:text-[9vw] outline-text glitch-text"
+            data-text="FOUR"
+          >
+            Four
+          </span>
+          <span
+            className="block text-[9vw] md:text-[6.2vw] animated-gradient-text glitch-text mt-1"
+            data-text="DIMENSIONS"
+          >
+            Dimensions
+          </span>
+          <span className="block text-[5vw] md:text-[2.6vw] tracking-[0.42em] text-white/90 mt-3 md:mt-5 glow-mint">
+            One Signal.
+          </span>
         </h1>
 
-        <p
-          className="text-sm landscape:text-xs md:text-lg font-inter font-medium max-w-md leading-relaxed"
-          style={{
-            background: 'linear-gradient(90deg, #5ED29C, #9D4EDD)',
-            WebkitBackgroundClip: 'text',
-            WebkitTextFillColor: 'transparent',
-            backgroundClip: 'text',
-          }}
-        >
-          Four frequencies tuned to your growth,<br />
-          one steady signal that never drops.
+        <p className="mt-5 md:mt-7 max-w-lg text-sm md:text-base font-inter font-medium leading-relaxed text-white/60">
+          We tune technology to the frequency of your ambition:{' '}
+          <span className="text-glow">amplitude</span>,{' '}
+          <span className="text-[#b9a8ff]">wavelength</span>,{' '}
+          <span className="text-[#b14eff]">phase</span> and{' '}
+          <span className="text-accent">time</span>, phase-locked into products that resonate.
         </p>
+
+        <div className="mt-8 md:mt-10 flex flex-wrap gap-4">
+          <button
+            onClick={() => scrollTo('projects')}
+            className="px-6 py-3 rounded-md border border-glow text-glow font-bold uppercase tracking-widest text-xs md:text-sm hover:bg-glow hover:text-primary transition-colors cursor-pointer"
+          >
+            Explore Projects
+          </button>
+          <button
+            onClick={() => scrollTo('contact')}
+            className="px-6 py-3 rounded-md border border-white/20 text-white/70 font-bold uppercase tracking-widest text-xs md:text-sm hover:border-white/60 hover:text-white transition-colors cursor-pointer"
+          >
+            Start Transmission
+          </button>
+        </div>
       </div>
     </section>
   );

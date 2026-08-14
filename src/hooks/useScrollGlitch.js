@@ -1,27 +1,18 @@
 import { useEffect } from 'react';
 
+/* Toggles .is-scrolling on <body> while the user scrolls (drives CSS glitch). */
 export function useScrollGlitch() {
   useEffect(() => {
-    let scrollTimeout;
-
-    const handleScroll = () => {
-      // Add class when scrolling
+    let timeout;
+    const onScroll = () => {
       document.body.classList.add('is-scrolling');
-
-      // Clear the timeout throughout the scroll
-      window.clearTimeout(scrollTimeout);
-
-      // Set a timeout to run after scrolling ends
-      scrollTimeout = setTimeout(() => {
-        document.body.classList.remove('is-scrolling');
-      }, 150); // 150ms after scroll ends, remove glitch
+      clearTimeout(timeout);
+      timeout = setTimeout(() => document.body.classList.remove('is-scrolling'), 160);
     };
-
-    window.addEventListener('scroll', handleScroll, { passive: true });
-
+    window.addEventListener('scroll', onScroll, { passive: true });
     return () => {
-      window.removeEventListener('scroll', handleScroll);
-      window.clearTimeout(scrollTimeout);
+      window.removeEventListener('scroll', onScroll);
+      clearTimeout(timeout);
     };
   }, []);
 }

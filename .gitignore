@@ -22,3 +22,8 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Local design assets (kept out of the repo)
+3d asset/
+waves/
+*.mov
